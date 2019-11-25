@@ -2,6 +2,8 @@ import Mock from 'mockjs'
 import AddressAPI from './addrerss'
 import FootTypeAPI from './foodTypes'
 import ShopsAPI from './shops'
+import UserAPI from './user'
+
 
 Mock.setup({
     timeout: '2000'
@@ -14,6 +16,10 @@ Mock.mock(/\/position/, 'get', AddressAPI.getAddress)
 Mock.mock(/\/index_category/, 'get', FootTypeAPI.getFoodTypes)
 
 Mock.mock(/\/shops/, 'get', ShopsAPI.getShopList)
+
+Mock.mock(/\/img_code/, 'get', UserAPI.getImgCode)
+
+Mock.mock(/\/send_sms_code/, 'get', UserAPI.sendSmsCode)
 
 
 //配置模拟数据接口

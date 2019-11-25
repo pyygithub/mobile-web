@@ -44,11 +44,9 @@ const app = {
         // 异步获取商品列表
         async getShopList({ commit, state}) {
             // 发送异步请求
-            const data = {
-                latitude: state.latitude,
-                longitude: state.longitude
-            }
-            const result = await getShopList(data)
+            const longitude = state.longitude
+            const latitude = state.latitude
+            const result = await getShopList(longitude, latitude)
             if (result.code === 200) {
                 const shops = result.data
                 // 提交mutations
