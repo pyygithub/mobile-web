@@ -11,12 +11,29 @@ export default {
     },
     // 发送短信验证码
     sendSmsCode: {
-        "code" : 200, // 20001 发送短信验证码失败
+        // "code" : 200, // 20001 发送短信验证码失败
+        // "success" : true,
+        // "message" : "SUCCESS",
+        // "data":   {
+        //     "code": "134144",
+        //     "uuid": "sms_code_648551742316740608"
+        // }
+
+        "code" : 20001, // 20001 发送短信验证码失败
         "success" : true,
-        "message" : "SUCCESS",
-        "data":   {
-            "code": "134144",
-            "uuid": "sms_code_648551742316740608"
-        }
+        "message" : "发送短信验证码失败",
+        "data": null
+    },
+    loginSms: {
+        "code" : 200,
+        "success" : true,
+        "message" : "登录成功",
+        "data": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIsImlhdCI6MTUzNTY4NjY0NSwiZXhwIjoxNTM2ODk2MjQ1fQ.bGV4qjcZcNYDBJjihIsSbSEQyPa5SkVcUYuA0WfgDds"
+    },
+    loginPwd: {
+        "code" : 200,
+        "success" : true,
+        "message" : "登录成功",
+        "data": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIsImlhdCI6MTUzNTY4NjY0NSwiZXhwIjoxNTM2ODk2MjQ1fQ.bGV4qjcZcNYDBJjihIsSbSEQyPa5SkVcUYuA0WfgDds"
     }
 }

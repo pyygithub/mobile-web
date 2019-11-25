@@ -21,6 +21,10 @@ Mock.mock(/\/img_code/, 'get', UserAPI.getImgCode)
 
 Mock.mock(/\/send_sms_code/, 'get', UserAPI.sendSmsCode)
 
+Mock.mock(/\/login_sms/, 'post', UserAPI.loginSms)
+
+Mock.mock(/\/login_pwd/, 'post', UserAPI.loginPwd)
+
 
 //配置模拟数据接口
 //  /company/12

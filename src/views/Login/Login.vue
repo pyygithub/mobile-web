@@ -41,7 +41,7 @@
                             </section>
                             <section class="login_message">
                                 <input type="text" maxlength="11" placeholder="验证码" v-model="imgCode">
-                                <img class="get_verification" :src="imgCodeUrl" alt="captcha" @click="getCaptcha">
+                                <img class="get_verification" :src="imgCodeUrl" alt="验证码" @click="getCaptcha">
                             </section>
                         </section>
                     </div>
@@ -60,7 +60,8 @@
 
 <script>
     import AlertTip from "../../components/AlertTip/AlertTip";
-    import {getImgCode, sendSmsCode} from '../../api/user'
+    import {getImgCode, sendSmsCode, loginSms, loginPwd} from '../../api/user'
+    import {setToken} from '../../utils/auth'
 
     export default {
         data () {
@@ -72,10 +73,10 @@
                 name: '', // 用户名
                 pwd: '', // 密码
                 smsCode: '', // 短信验证码
-                smsCodeUuid: '', // 验证唯一标识
+                smsCodeUUID: '', // 验证唯一标识
                 imgCode: '', // 图形验证码
                 imgCodeUrl: '', // 图形验证码地址
-                imgCodeUuid: '', // 图形验证码唯一标识
+                imgCodeUUID: '', // 图形验证码唯一标识
                 alertText: '', // 提示文本
                 alertShow: false, // 是否显示提示框
             }
@@ -89,7 +90,7 @@
             this.getCaptcha()
         },
         methods: {
-            // 异步获取短信验证码
+            // 获取短信验证码
             async getSmsCode () {
                 // 如果当前没有计时
                 if (!this.computeTime) {
@@ -119,7 +120,7 @@
             // 获取图形验证码
             async getCaptcha () {
                 const result = await getImgCode()
-                if (result.code === 20001) {
+                if (result.code === 200) {
                     this.imgCodeUrl = result.data.img
                     this.imgCodeUuid = result.data.uuid
                 }
@@ -134,33 +135,69 @@
                 this.alertShow = false
                 this.alertText = ''
             },
-
             // 异步登录
-            login () {
+            async login () {
+                let result
                 // 前台表单验证
                 if (this.loginWay) {// 方式一：短信登录
-                    const {phone, code} = this
+                    const {phone, smsCode, smsCodeUUID} = this
                     if (!this.rightPhone) {
                         // 手机号不正确
                         this.showAlert('手机号不正确')
-                    } else if (!/^\d{6}$/.test(code)) {
+                        return
+                    } else if (!/^\d{6}$/.test(smsCode)) {
                         // 验证码不正确
                         this.showAlert('验证码不正确')
+                        return
                     }
+                    // 发送短信登录请求
+                    result = await loginSms({
+                        phone,
+                        smsCode,
+                        smsCodeUUID
+                    })
                 } else { // 方式二：密码登录
-                    const {name, pwd, captcha} = this
+                    const {name, pwd, imgCode, imgCodeUUID} = this
                     if (!this.name) {
                         // 用户名不能为空
                         this.showAlert('用户名不能为空')
+                        return
                     } else if (!this.pwd) {
                         // 密码不能为空
                         this.showAlert('密码不能为空')
-                    } else if (!this.captcha) {
+                        return
+                    } else if (!this.imgCode) {
                         // 验证码不能为空
                         this.showAlert('验证码不能为空')
+                        return
                     }
+                    // 发送密码登录请求
+                    result = await loginPwd({
+                        name,
+                        pwd,
+                        imgCode,
+                        imgCodeUUID
+                    })
                 }
-
+                // 停止倒计时
+                if (this.computeTime) {
+                    this.computeTime = 0
+                    clearInterval(this.intervalId)
+                }
+                // 根据结果数据处理
+                if (result.code === 200) {
+                    const token = result.data
+                    // 将token保存到sessionStorage
+                    setToken(token)
+                    // 跳转页面到个人中心
+                    this.$router.replace('/profile')
+                } else {
+                    // 重新获取图片验证码
+                    this.getCaptcha()
+                    // 显示警告提示
+                    const msg = result.message
+                    this.showAlert(msg)
+                }
             }
 
 
