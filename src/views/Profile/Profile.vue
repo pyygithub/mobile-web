@@ -2,17 +2,17 @@
     <section class="profile">
         <HeaderTop title="我的"></HeaderTop>
         <section class="profile-number">
-            <router-link to="/login" class="profile-link">
+            <router-link :to="!username?'/login':'/profile'" class="profile-link">
                 <div class="profile_image">
                     <i class="iconfont icon-person"></i>
                 </div>
                 <div class="user-info">
-                    <p class="user-info-top">登录/注册</p>
+                    <p class="user-info-top">{{username?username:'登录/注册'}}</p>
                     <p>
                         <span class="user-icon">
                             <i class="iconfont icon-mobile"></i>
                         </span>
-                        <span class="icon-mobile-number">暂无绑定手机号</span>
+                        <span class="icon-mobile-number">{{phone?phone:'暂无绑定手机号'}}</span>
                     </p>
                 </div>
                 <span class="arrow">
@@ -39,68 +39,76 @@
         <section class="profile_my_order border-1px">
             <!-- 我的订单 -->
             <a href='javascript:' class="my_order">
-            <span>
-              <i class="iconfont icon-order-s"></i>
-            </span>
+                <span>
+                    <i class="iconfont icon-dingdan1"></i>
+                </span>
                 <div class="my_order_div">
                     <span>我的订单</span>
                     <span class="my_order_icon">
-                <i class="iconfont icon-jiantou1"></i>
-              </span>
+                        <i class="iconfont icon-angle-right"></i>
+                    </span>
                 </div>
             </a>
             <!-- 积分商城 -->
             <a href='javascript:' class="my_order">
-            <span>
-              <i class="iconfont icon-jifen"></i>
-            </span>
+                <span>
+                    <i class="iconfont icon-jifen"></i>
+                </span>
                 <div class="my_order_div">
                     <span>积分商城</span>
                     <span class="my_order_icon">
-                <i class="iconfont icon-jiantou1"></i>
-              </span>
+                        <i class="iconfont icon-angle-right"></i>
+                    </span>
                 </div>
             </a>
             <!-- 硅谷外卖会员卡 -->
             <a href="javascript:" class="my_order">
-            <span>
-              <i class="iconfont icon-vip"></i>
-            </span>
+                <span>
+                    <i class="iconfont icon-vip"></i>
+                </span>
                 <div class="my_order_div">
                     <span>硅谷外卖会员卡</span>
                     <span class="my_order_icon">
-                <i class="iconfont icon-jiantou1"></i>
-              </span>
+                        <i class="iconfont icon-angle-right"></i>
+                    </span>
                 </div>
             </a>
         </section>
         <section class="profile_my_order border-1px">
             <!-- 服务中心 -->
             <a href="javascript:" class="my_order">
-            <span>
-              <i class="iconfont icon-fuwu"></i>
-            </span>
+                <span>
+                  <i class="iconfont icon-fuwuzhongxin"></i>
+                </span>
                 <div class="my_order_div">
                     <span>服务中心</span>
                     <span class="my_order_icon">
-                <i class="iconfont icon-jiantou1"></i>
-              </span>
+                        <i class="iconfont icon-angle-right"></i>
+                    </span>
                 </div>
             </a>
+        </section>
+        <section class="profile_my_order border-1px">
+            <mt-button type="danger" style="width: 100%">退出登录</mt-button>
         </section>
     </section>
 </template>
 
 <script>
     import HeaderTop from '../../components/HeaderTop/HeaderTop'
+    import {mapGetters} from 'vuex'
+
     export default {
+        computed: {
+          ...mapGetters(['username','avatar', 'phone'])
+        },
         components: {
             HeaderTop
         }
     }
 </script>
 
-<style lang="stylus" type="text/stylus" ref="stylesheet/stylus">
+<style lang="stylus" type="text/stylus" ref="stylesheet/stylus" scoped>
     @import "../../assets/stylus/mixins.styl"
     .header //头部公共css
         background-color #02a774
@@ -235,7 +243,7 @@
                     height 20px
                     >.iconfont
                         margin-left -10px
-                        font-size 30px
+                        font-size 20px
                     .icon-order-s
                         color #02a774
                     .icon-jifen

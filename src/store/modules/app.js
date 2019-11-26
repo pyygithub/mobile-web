@@ -1,5 +1,6 @@
 import {getAddress, getFoodTypes, getShopList} from '../../api/index'
 
+const OK = 200
 const app = {
     state: {
         latitude: 40.10038,
@@ -9,13 +10,13 @@ const app = {
         shops: []
     },
     mutations: {
-        RECEIVE_ADDRESS: (state, {address}) => {
+        SET_ADDRESS: (state, {address}) => {
             state.address = address
         },
-        RECEIVE_FOOD_TYPES: (state, {foodTypes}) => {
+        SET_FOOD_TYPES: (state, {foodTypes}) => {
             state.foodTypes = foodTypes
         },
-        RECEIVE_SHOPS: (state, {shops}) => {
+        SET_SHOPS: (state, {shops}) => {
             state.shops = shops
         }
     },
@@ -25,20 +26,20 @@ const app = {
             // 发送异步请求
             const geohash = state.latitude + ',' + state.longitude
             const result = await getAddress(geohash)
-            if (result.code === 200) {
+            if (result.code === OK) {
                 const address = result.data
                 // 提交mutations
-                commit('RECEIVE_ADDRESS', {address})
+                commit('SET_ADDRESS', {address})
             }
         },
         // 异步获取商品分类
         async getFoodTypes({ commit}) {
             // 发送异步请求
             const result = await getFoodTypes()
-            if (result.code === 200) {
+            if (result.code === OK) {
                 const foodTypes = result.data
                 // 提交mutations
-                commit('RECEIVE_FOOD_TYPES', {foodTypes})
+                commit('SET_FOOD_TYPES', {foodTypes})
             }
         },
         // 异步获取商品列表
@@ -47,10 +48,10 @@ const app = {
             const longitude = state.longitude
             const latitude = state.latitude
             const result = await getShopList(longitude, latitude)
-            if (result.code === 200) {
+            if (result.code === OK) {
                 const shops = result.data
                 // 提交mutations
-                commit('RECEIVE_SHOPS', {shops})
+                commit('SET_SHOPS', {shops})
             }
         },
     }

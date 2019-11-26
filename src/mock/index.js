@@ -6,7 +6,7 @@ import UserAPI from './user'
 
 
 Mock.setup({
-    timeout: '2000'
+    timeout: '200'
 })
 
 //如果发送请求的api路径匹配，拦截
@@ -25,6 +25,7 @@ Mock.mock(/\/login_sms/, 'post', UserAPI.loginSms)
 
 Mock.mock(/\/login_pwd/, 'post', UserAPI.loginPwd)
 
+Mock.mock(/\/profile/, 'get', UserAPI.getUserInfo)
 
 //配置模拟数据接口
 //  /company/12

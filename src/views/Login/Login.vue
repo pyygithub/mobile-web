@@ -62,6 +62,7 @@
     import AlertTip from "../../components/AlertTip/AlertTip";
     import {getImgCode, sendSmsCode, loginSms, loginPwd} from '../../api/user'
     import {setToken} from '../../utils/auth'
+    import {mapActions} from 'vuex'
 
     export default {
         data () {
@@ -90,6 +91,17 @@
             this.getCaptcha()
         },
         methods: {
+            ...mapActions(['getUserInfo']),
+            // 提示框
+            showAlert (alertText) {
+                this.alertShow = true
+                this.alertText = alertText
+            },
+            // 关闭提示框
+            closeTip () {
+                this.alertShow = false
+                this.alertText = ''
+            },
             // 获取短信验证码
             async getSmsCode () {
                 // 如果当前没有计时
@@ -113,7 +125,6 @@
                             this.computeTime = 0
                             clearInterval(this.intervalId)
                         }
-
                     }
                 }
             },
@@ -122,18 +133,8 @@
                 const result = await getImgCode()
                 if (result.code === 200) {
                     this.imgCodeUrl = result.data.img
-                    this.imgCodeUuid = result.data.uuid
+                    this.imgCodeUUID = result.data.uuid
                 }
-            },
-            // 提示框
-            showAlert (alertText) {
-                this.alertShow = true
-                this.alertText = alertText
-            },
-            // 关闭提示框
-            closeTip () {
-                this.alertShow = false
-                this.alertText = ''
             },
             // 异步登录
             async login () {
@@ -189,6 +190,8 @@
                     const token = result.data
                     // 将token保存到sessionStorage
                     setToken(token)
+                    // 将用户信息保存到vuex
+                    this.getUserInfo();
                     // 跳转页面到个人中心
                     this.$router.replace('/profile')
                 } else {
@@ -200,7 +203,6 @@
                 }
             }
 
-
         },
         components: {
             AlertTip
@@ -208,7 +210,7 @@
     }
 </script>
 
-<style lang="stylus" type="text/stylus" ref="stylesheet/stylus" >
+<style lang="stylus" type="text/stylus" ref="stylesheet/stylus" scoped>
     @import "../../assets/stylus/mixins.styl"
     .loginContainer
         width 100%

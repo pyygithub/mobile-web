@@ -4,6 +4,12 @@ import VueRouter from 'vue-router'
 // 声明使用插件
 Vue.use(VueRouter)
 
+// 解决vue中的NavigationDuplicated {_name: "NavigationDuplicated", name: "NavigationDuplicated"}
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+}
+
 const routes = [
     {
         path: '/',

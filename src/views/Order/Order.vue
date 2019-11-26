@@ -17,7 +17,7 @@
     export default {}
 </script>
 
-<style lang="stylus" type="text/stylus" ref="stylesheet/stylus">
+<style lang="stylus" type="text/stylus" ref="stylesheet/stylus" scoped>
     @import "../../assets/stylus/mixins.styl"
     .header //头部公共css
         background-color #02a774
