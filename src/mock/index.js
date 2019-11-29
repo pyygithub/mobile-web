@@ -1,9 +1,9 @@
 import Mock from 'mockjs'
-import AddressAPI from './addrerss'
-import FootTypeAPI from './foodTypes'
-import ShopsAPI from './shops'
-import UserAPI from './user'
-
+import AddressAPI from './api/addrerss'
+import FootTypeAPI from './api/foodTypes'
+import ShopsAPI from './api/shops'
+import UserAPI from './api/user'
+import data from './data/data.json'
 
 Mock.setup({
     timeout: '200'
@@ -28,6 +28,12 @@ Mock.mock(/\/login_pwd/, 'post', UserAPI.loginPwd)
 Mock.mock(/\/profile/, 'get', UserAPI.getUserInfo)
 
 Mock.mock(/\/logout/, 'get', UserAPI.logout)
+
+Mock.mock(/\/goods/, 'get', {code:200, data: data.goods})
+
+Mock.mock(/\/ratings/, 'get', {code:200, data: data.ratings})
+
+Mock.mock(/\/info/, 'get', {code:200, data: data.info})
 
 //配置模拟数据接口
 //  /company/12

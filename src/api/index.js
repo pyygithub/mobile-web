@@ -12,4 +12,12 @@ export const getShopList = (longitude, latitude) => createAPI('/shops', 'get', {
 // 4、根据经纬度和关键字搜索商铺列表](#4根据经纬度和关键字搜索商铺列表)
 export const searchShopList = (goehash, keyword) => createAPI('/shops', 'get', {goehash, keyword})
 
+// 5、获取商家信息
+export const getShopInfo = () => createAPI('/info', 'get')
+
+// 6、获取商家评价列表
+export const getShopRatings = (goehash, keyword) => createAPI('/ratings', 'get')
+
+// 7、获取商家商品数组
+export const getShopGoods = (goehash, keyword) => createAPI('/goods', 'get')
 

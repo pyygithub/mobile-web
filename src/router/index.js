@@ -48,6 +48,32 @@ const routes = [
         }
     },
     {
+        path: '/shop',
+        name: 'Shop',
+        component: () => import('../views/Shop/Shop.vue'),
+        children: [
+            {
+                path: '/shop/goods',
+                name: 'ShopGoods',
+                component: () => import('../views/Shop/ShopGoods/ShopGoods.vue')
+            },
+            {
+                path: '/shop/ratings',
+                name: 'ratings',
+                component: () => import('../views/Shop/ShopRatings/ShopRatings.vue')
+            },
+            {
+                path: '/shop/info',
+                name: 'Info',
+                component: () => import('../views/Shop/ShopInfo/ShopInfo.vue')
+            },
+            {
+                path: '',
+                redirect: '/shop/goods'
+            }
+        ]
+    },
+    {
         path: '/login',
         name: 'Login',
         component: () => import('../views/Login/Login.vue')
