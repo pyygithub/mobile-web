@@ -27,6 +27,8 @@ Mock.mock(/\/login_pwd/, 'post', UserAPI.loginPwd)
 
 Mock.mock(/\/profile/, 'get', UserAPI.getUserInfo)
 
+Mock.mock(/\/logout/, 'get', UserAPI.logout)
+
 //配置模拟数据接口
 //  /company/12
 //Mock.mock(/\/company\/+/, 'get', CompanyAPI.sassDetail)//根据id查询

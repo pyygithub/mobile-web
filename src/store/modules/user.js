@@ -1,4 +1,5 @@
-import {getUserInfo} from '../../api/user'
+import {getUserInfo, logout} from '../../api/user'
+import {removeToken} from '../../utils/auth'
 
 const OK = 200 // 成功响应状态码
 const user = {
@@ -21,6 +22,12 @@ const user = {
         SET_ROLES: (state, roles) => {
             state.roles = roles
         },
+        RESET_USERNAME: (state) => {
+            state.username = ''
+            state.phone = ''
+            state.avatar = ''
+            state.roles = []
+        },
     },
     actions: {
         // 获取用户信息
@@ -35,6 +42,15 @@ const user = {
                 commit('SET_ROLES', result.data.roles ? result.data.roles : {menus:[],points:[]})
                 commit('SET_AVATAR', result.data.avatar)
             }
+        },
+        // 用户退出
+        async logout({commit, state}) {
+            // 发送异步请求
+            await logout();
+            // 清除token
+            removeToken();
+            // 重置user
+            commit('RESET_USERNAME')
         }
     }
 }
