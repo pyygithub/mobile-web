@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import {
     getAddress,
     getFoodTypes,
@@ -37,6 +38,21 @@ const app = {
         },
         SET_INFO: (state, {info}) => {
             state.info = info
+        },
+        INCREMENT_FOOD_COUNT: (state, {food}) => {
+            // 第一次增加
+            if (!food.count) {
+                //food.count = 1 // 新增属性（没有数据绑定效果）
+                Vue.set(food, 'count', 1) // 新增的属性也有数据绑定效果
+            } else {
+                food.count++
+            }
+        },
+        DECREMENT_FOOD_COUNT: (state, {food}) => {
+            // 只要有值才去减
+            if (food.count) {
+                food.count--
+            }
         }
     },
     actions: {
@@ -105,6 +121,14 @@ const app = {
                 commit('SET_INFO', {info})
             }
         },
+        // 同步更新food中的count值
+        updateFoodCount ({commit}, {isAdd, food}) {
+            if (isAdd) {
+                commit('INCREMENT_FOOD_COUNT', {food})
+            } else {
+                commit('DECREMENT_FOOD_COUNT', {food})
+            }
+        }
     }
 }
 

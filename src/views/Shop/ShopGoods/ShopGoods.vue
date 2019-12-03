@@ -12,13 +12,13 @@
                     </li>
                 </ul>
             </div>
-
             <div class="foods-wrapper" ref="foodsWrapper">
                 <ul ref="foodsUl">
                     <li class="food-list-hook" v-for="(good, index) in goods" :key="index">
                         <h1 class="title">{{good.name}}</h1>
                         <ul>
-                            <li class="food-item bottom-border-1px" v-for="(food, index) in good.foods" :key="index">
+                            <li class="food-item bottom-border-1px" v-for="(food, index) in good.foods"
+                                :key="index" @click="showFood(food)">
                                 <div class="icon">
                                     <img width="57" height="57" :src="food.icon">
                                 </div>
@@ -31,7 +31,9 @@
                                         <span class="now">￥{{food.price}}</span>
                                         <span class="old" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
                                     </div>
-                                    <div class="cartcontrol-wrapper"> CartControl</div>
+                                    <div class="cartcontrol-wrapper">
+                                        <CartControl :food="food"/>
+                                    </div>
                                 </div>
                             </li>
                         </ul>
@@ -39,18 +41,24 @@
                 </ul>
             </div>
         </div>
+
+        <Food :food="food" ref="food"/>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
     import BScroll from 'better-scroll'
     import {mapGetters} from 'vuex'
+    import CartControl from '../../../components/CartControl/CartControl'
+    import Food from '../../../components/Food/Food'
+
 
     export default {
         data () {
             return {
                 scrollY: 0, // 右侧滑动的Y轴坐标（滑动过程中实时变化）
                 tops: [],   // 所有右侧分类li的top组成的数组（列表第一次显示后就不再变化）
+                food: {},   // 需要显示的food
             }
         },
         // 计算属性：初始执行一次，相关data属性发生改变
@@ -122,7 +130,18 @@
                 this.scrollY = scrollY
                 // 使右侧列表滑动到指定位置
                 this.foodScroll.scrollTo(0, -scrollY, 300)
+            },
+            // 显示单击的food
+            showFood (food) {
+                // 设置food
+                this.food = food
+                // 显示food组件（在父组件中调用子组件对象的方法）
+                this.$refs.food.toggleShow()
             }
+        },
+        components: {
+            CartControl,
+            Food
         }
     }
 </script>
