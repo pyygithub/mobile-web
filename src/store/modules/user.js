@@ -34,7 +34,6 @@ const user = {
         async getUserInfo({commit, state}) {
             // 发送异步请求
             const result = await getUserInfo()
-            console.log(result.data)
             if (result.code === OK) {
                 // 提交mutations
                 commit('SET_USERNAME', result.data.username)

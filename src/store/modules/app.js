@@ -74,13 +74,15 @@ const app = {
             }
         },
         // 异步获取商家食品
-        async getShopGoods({commit}) {
+        async getShopGoods({commit}, callback) {
             // 发送异步请求
             const result = await getShopGoods()
             if (result.code === OK) {
                 const goods = result.data
                 // 提交mutations
                 commit('SET_GOODS', {goods})
+                // 数据更新了，通知下组件
+                callback && callback()
             }
         },
         // 异步获取商家评论列表
