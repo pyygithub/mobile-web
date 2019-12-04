@@ -2,6 +2,7 @@ import Mock from 'mockjs'
 import AddressAPI from './api/addrerss'
 import FootTypeAPI from './api/foodTypes'
 import ShopsAPI from './api/shops'
+import SearchShopsAPI from './api/searchShops.js'
 import UserAPI from './api/user'
 import data from './data/data.json'
 
@@ -16,6 +17,8 @@ Mock.mock(/\/position/, 'get', AddressAPI.getAddress)
 Mock.mock(/\/index_category/, 'get', FootTypeAPI.getFoodTypes)
 
 Mock.mock(/\/shops/, 'get', ShopsAPI.getShopList)
+
+Mock.mock(/\/search_shops/, 'get', SearchShopsAPI.getSearchShops)
 
 Mock.mock(/\/img_code/, 'get', UserAPI.getImgCode)
 

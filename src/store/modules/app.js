@@ -5,7 +5,8 @@ import {
     getShopList,
     getShopGoods,
     getShopInfo,
-    getShopRatings
+    getShopRatings,
+    getSearchShopList,
 } from '../../api/index'
 
 const OK = 200
@@ -20,6 +21,7 @@ const app = {
         ratings: [],// 商家评价列表
         info: {},// 商家信息
         cartFoods: [],// 购物车中的商品（食物）列表
+        searchShops: [], // 搜索商家列表
     },
     mutations: {
         SET_ADDRESS: (state, {address}) => {
@@ -66,6 +68,9 @@ const app = {
             state.cartFoods.forEach(food => delete food.count)
             // 移除购物车中的所有购物项
             state.cartFoods = []
+        },
+        SET_SEARCH_SHOPS: (state, {searchShops}) => {
+            state.searchShops = searchShops
         }
     },
     actions: {
@@ -147,6 +152,17 @@ const app = {
         // 同步清空购物车
         clearCart ({commit}) {
             commit('CLEAR_CART')
+        },
+        // 搜索商家列表
+        async getSearchShops ({commit, state}, keyword) {
+            // 发送异步请求
+            const geohash = state.latitude + ',' + state.longitude
+            const result = await getSearchShopList(geohash, keyword)
+            if (result.code === OK) {
+                const searchShops = result.data
+                // 提交mutations
+                commit('SET_SEARCH_SHOPS', {searchShops})
+            }
         }
     }
 }

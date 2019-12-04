@@ -10,7 +10,7 @@ export const getFoodTypes = () => createAPI('/index_category', 'get')
 export const getShopList = (longitude, latitude) => createAPI('/shops', 'get', {longitude, latitude})
 
 // 4、根据经纬度和关键字搜索商铺列表](#4根据经纬度和关键字搜索商铺列表)
-export const searchShopList = (goehash, keyword) => createAPI('/shops', 'get', {goehash, keyword})
+export const getSearchShopList = (goehash, keyword) => createAPI('/search_shops', 'get', {goehash, keyword})
 
 // 5、获取商家信息
 export const getShopInfo = () => createAPI('/info', 'get')
