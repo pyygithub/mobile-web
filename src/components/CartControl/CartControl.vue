@@ -31,7 +31,6 @@
             line-height: 20px
             font-size: 20px
             color: rgb(0, 160, 220)
-
         .icon-remove_circle_outline
             display: inline-block
             padding 6px

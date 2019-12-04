@@ -10,6 +10,10 @@ const getters = {
     goods: state => state.app.goods,
     ratings: state => state.app.ratings,
     info: state => state.app.info,
+    cartFoods: state => state.app.cartFoods,
+    totalCount: state => state.app.cartFoods.reduce((preTotal, food) => preTotal + food.count, 0),
+    totalPrice: state => state.app.cartFoods.reduce((preTotal, food) => preTotal + food.count * food.price, 0),
+
     username: state => state.user.username,
     phone: state => state.user.phone,
     avatar: state => state.user.avatar,

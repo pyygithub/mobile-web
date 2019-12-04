@@ -40,9 +40,12 @@
                     </li>
                 </ul>
             </div>
+
+            <ShopCart/>
         </div>
 
         <Food :food="food" ref="food"/>
+
     </div>
 </template>
 
@@ -51,7 +54,7 @@
     import {mapGetters} from 'vuex'
     import CartControl from '../../../components/CartControl/CartControl'
     import Food from '../../../components/Food/Food'
-
+    import ShopCart from '../../../components/ShopCart/ShopCart'
 
     export default {
         data () {
@@ -141,7 +144,8 @@
         },
         components: {
             CartControl,
-            Food
+            Food,
+            ShopCart
         }
     }
 </script>

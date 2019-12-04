@@ -11,14 +11,15 @@ import {
 const OK = 200
 const app = {
     state: {
-        latitude: 40.10038,
-        longitude: 116.38234,
-        address: {},
-        foodTypes: [],
-        shops: [],
-        goods:[],
-        ratings: [],
-        info: {}
+        latitude: 40.10038, // 纬度
+        longitude: 116.38234,// 经度
+        address: {},// 地址相关信息
+        foodTypes: [],// 食物分类数组
+        shops: [],// 商家数组
+        goods:[],// 商品列表
+        ratings: [],// 商家评价列表
+        info: {},// 商家信息
+        cartFoods: [],// 购物车中的商品（食物）列表
     },
     mutations: {
         SET_ADDRESS: (state, {address}) => {
@@ -44,6 +45,8 @@ const app = {
             if (!food.count) {
                 //food.count = 1 // 新增属性（没有数据绑定效果）
                 Vue.set(food, 'count', 1) // 新增的属性也有数据绑定效果
+                // 将food添加到cartFoods中
+                state.cartFoods.push(food)
             } else {
                 food.count++
             }
@@ -52,7 +55,17 @@ const app = {
             // 只要有值才去减
             if (food.count) {
                 food.count--
+                if (food.count === 0) {
+                    // 将food从cartFoods中移除
+                    state.cartFoods.splice(state.cartFoods.indexOf(food), 1)
+                }
             }
+        },
+        CLEAR_CART: (state) => {
+            // 清除food的count
+            state.cartFoods.forEach(food => delete food.count)
+            // 移除购物车中的所有购物项
+            state.cartFoods = []
         }
     },
     actions: {
@@ -128,6 +141,10 @@ const app = {
             } else {
                 commit('DECREMENT_FOOD_COUNT', {food})
             }
+        },
+        // 同步清空购物车
+        clearCart ({commit}) {
+            commit('CLEAR_CART')
         }
     }
 }

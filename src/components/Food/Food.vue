@@ -30,12 +30,10 @@
 
 <script>
     import CartControl from '../CartControl/CartControl.vue'
-
     export default {
         props: {
             food: Object
         },
-
         data () {
             return {
                 isShow: false
