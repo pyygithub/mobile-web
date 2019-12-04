@@ -115,13 +115,15 @@ const app = {
             }
         },
         // 异步获取商家评论列表
-        async getShopRatings({commit}) {
+        async getShopRatings({commit}, callback) {
             // 发送异步请求
             const result = await getShopRatings()
             if (result.code === OK) {
                 const ratings = result.data
                 // 提交mutations
                 commit('SET_RATINGS', {ratings})
+                // 数据更新了，通知下组件
+                callback && callback()
             }
         },
         // 异步获取商家信息

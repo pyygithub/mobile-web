@@ -13,6 +13,7 @@ const getters = {
     cartFoods: state => state.app.cartFoods,
     totalCount: state => state.app.cartFoods.reduce((preTotal, food) => preTotal + food.count, 0),
     totalPrice: state => state.app.cartFoods.reduce((preTotal, food) => preTotal + food.count * food.price, 0),
+    positiveSize: state => state.app.ratings.reduce((preTotal, rating) => preTotal + (rating.rateType === 0 ? 1 : 0), 0 ),
 
     username: state => state.user.username,
     phone: state => state.user.phone,
