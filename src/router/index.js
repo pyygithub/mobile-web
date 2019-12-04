@@ -18,7 +18,7 @@ const routes = [
     {
         path: '/home',
         name: 'Home',
-        component: () => import('../views/Home/Home.vue'),
+        component: () => import('../views/Home/Home.vue'), // 路由懒加载（请求该路径时才会引入该路由，会自动拆分打包）
         meta: {
             showFooter: true
         }
